@@ -13,6 +13,7 @@
             [ring.adapter.jetty :as jetty]
             [taoensso.timbre :as log]
             [tutorial.fns])
+  (:gen-class)
   (:import [java.util Date]))
 
 (def dev? (boolean (System/getenv "DEVMODE")))

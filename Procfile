@@ -1,2 +1,1 @@
-web: java $JVM_OPTS -cp target/learndatalogtoday-standalone.jar clojure.main -m learndatalogtoday.handler
-
+web: java $JVM_OPTS -jar target/learndatalog-standalone.jar
