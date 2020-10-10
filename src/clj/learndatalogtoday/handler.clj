@@ -125,7 +125,7 @@
   (let [schema (read-file "resources/db/schema.edn")
         seed-data (read-file "resources/db/data.edn")
         db (init-db "movies" schema seed-data)
-        chapters (mapv read-chapter (range 9))]
+        chapters (mapv read-chapter (range 8))]
     (handler/site (app-routes db chapters))))
 
 (defn -main []

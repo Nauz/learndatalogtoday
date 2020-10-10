@@ -42,7 +42,7 @@
      (row (when (> chapter 0)
             [:a {:href (str "/chapter/" (dec chapter))}
              "<< Previous chapter"])
-          (when (< chapter 8)
+          (when (< chapter 7)
             [:a.pull-right {:href (str "/chapter/" (inc chapter))}
              "Next chapter >>"]))
      (row [:div.exercises {:style "margin-top: 14px"} exercises])
