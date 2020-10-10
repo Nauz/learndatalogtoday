@@ -1,36 +1,58 @@
-# Extensible Data Notation
+# Basic Queries
 
-In Datomic, a Datalog query is written in
-[extensible data notation (edn)](http://edn-format.org). Edn is a data format similar to JSON, but it:
+The example database we'll use contains *movies* mostly, but not
+exclusively, from the 80s. You'll find information about movie titles,
+release year, directors, cast members etc. As the tutorial advances
+we'll learn more about the contents of the database and how it's organized.
 
-* is extensible with user defined value types,
-* has more base types,
-* is a subset of [Clojure](http://clojure.org) data.
+The data model in Datomic is based around atomic facts called
+**datoms**. A datom is a 4-tuple consisting of
 
-Edn consists of:
+* Entity ID
+* Attribute
+* Value
+* Transaction ID
 
-* Numbers: `42`, `3.14159`
-* Strings: `"This is a string"`
-* Keywords: `:kw`, `:namespaced/keyword`, `:foo.bar/baz`
-* Symbols: `max`, `+`, `?title`
-* Vectors: `[1 2 3]` `[:find ?foo ...]`
-* Lists: `(3.14 :foo [:bar :baz])`, `(+ 1 2 3 4)`
-* Instants: `#inst "2013-02-26"`
-* .. and a few other things which we will not need in this tutorial.
+You can think of the database as a flat **set of datoms** of the form:
 
-Here is an example query that finds all movie titles in our example database:
+    [<e-id>  <attribute>      <value>          <tx-id>]
+    ...
+    [ 167    :person/name     "James Cameron"    102  ]
+    [ 234    :movie/title     "Die Hard"         102  ]
+    [ 234    :movie/year      1987               102  ]
+    [ 235    :movie/title     "Terminator"       102  ]
+    [ 235    :movie/director  167                102  ]
+    ...
 
-    [:find ?title
-     :where 
-     [_ :movie/title ?title]]
+Note that the last two datoms share the same entity ID, which means
+they are facts about the same movie. Note also that the last datom's
+value is the same as the first datom's entity ID, i.e. the value of
+the `:movie/director` attribute is itself an entity. All the datoms in
+the above set were added to the database in the same transaction, so 
+they share the same transaction ID.
 
-Note that the query is a vector with four elements:
+A query is represented as a vector starting with the keyword `:find` 
+followed by one or more **pattern variables** (symbols starting with `?`,
+e.g. `?title`). After the find clause comes the `:where` clause which
+restricts the query to datoms that match the given **data patterns**.
 
-* the keyword `:find`
-* the symbol `?title`
-* the keyword `:where`
-* the vector `[_ :movie/title ?title]`
+For example, this query finds all entity-ids that have the attribute 
+`:person/name` with a value of `"Ridley Scott"`:
 
-We'll go over the specific parts of the query later, but for now you 
-should simply type the above query verbatim into the textbox below,
-press **Run Query**, and then continue to the next part of the tutorial.
+    [:find ?e
+     :where
+     [?e :person/name "Ridley Scott"]]
+
+A data pattern is a datom with some parts replaced with pattern
+variables. It is the job of the query engine to figure out every
+possible value of each of the pattern variables and return the ones that are
+specified in the `:find` clause.
+
+The symbol `_` can be used as a
+wildcard for the parts of the data pattern that you wish to ignore. You can
+also elide trailing values in a data pattern. Therefore, the previous query 
+is equivalent to this next query, because we ignore the transaction part of the datoms.
+
+    [:find ?e
+     :where
+     [?e :person/name "Ridley Scott" _]]

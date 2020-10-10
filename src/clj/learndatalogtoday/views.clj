@@ -17,11 +17,7 @@
 (defn footer []
   [:footer.text-center {:style "border-top: 1px solid lightgrey; margin-top: 40px;padding:10px;"}
    [:small
-    [:p [:a {:href "http://www.learndatalogtoday.org"} "www.learndatalogtoday.org"]
-     " &copy; 2013 - 2016 Jonas Enlund"]
-    [:p
-     [:a {:href "https://github.com/jonase/learndatalogtoday"} "github"] " | "
-     [:a {:href "http://lispinsummerprojects.org/"} "lispinsummerprojects.org"]]]])
+    [:p [:a {:href "http://www.learndatalogtoday.org"} "www.learndatalogtoday.org"]]]])
 
 (defn row [& content]
   [:div.row
@@ -42,7 +38,7 @@
      (row (when (> chapter 0)
             [:a {:href (str "/chapter/" (dec chapter))}
              "<< Previous chapter"])
-          (when (< chapter 7)
+          (when (< chapter 6)
             [:a.pull-right {:href (str "/chapter/" (inc chapter))}
              "Next chapter >>"]))
      (row [:div.exercises {:style "margin-top: 14px"} exercises])

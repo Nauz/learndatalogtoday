@@ -1,20 +1,33 @@
-{:title "Basic Queries"
+{:title "Data Patterns"
  :text-file "resources/chapters/chapter-1.md"
- :exercises [{:question "Find the entity ids of movies made in 1987"
-              :hints ["You will need to use the `:movie/year` attribute" 
-                      "The data pattern should look something like `[?e :movie/title 1987]`"]
-              :inputs [{:type :query
-                        :value [:find ?e :where ...]
-                        :correct-value [:find ?e :where [?e :movie/year 1987]]}]}
-             
-             {:question "Find the entity-id **and** titles of movies in the database"
-              :inputs [{:type :query
-                        :value [:find ?e ?title :where ...]
-                        :correct-value [:find ?e ?title :where [?e :movie/title ?title]]}]}
+ :exercises
+ [{:question "Find movie titles made in 1985"
+   :inputs [{:type :query
+             :value [:find ?title :where ...]
+             :correct-value [:find ?title
+                             :where
+                             [?m :movie/title ?title]
+                             [?m :movie/year 1985]]}]}
 
-             {:question "Find the name of all people in the database"
-              :inputs [{:type :query
-                        :value [:find]
-                        :correct-value [:find ?name 
-                                        :where 
-                                        [?p :person/name ?name]]}]}]}
+  {:question "What year was \"Alien\" released?"
+   :inputs [{:type :query
+             :value [:find ?year :where ...]
+             :correct-value [:find ?year
+                             :where
+                             [?m :movie/title "Alien"]
+                             [?m :movie/year ?year]]}]}
+
+  {:question "Who directed RoboCop? You will need to use `[<movie-eid> :movie/director <person-eid>]` to find the director for a movie."
+   :inputs [{:type :query
+             :value [:find ?name :where ...]
+             :correct-value [:find ?name :where [?m :movie/title "RoboCop"] [?m :movie/director ?d] [?d :person/name ?name]]}]}
+
+  {:question "Find directors who have directed Arnold Schwarzenegger in a movie."
+   :inputs [{:type :query
+             :value [:find ?name :where ...]
+             :correct-value [:find ?name
+                             :where
+                             [?p :person/name "Arnold Schwarzenegger"]
+                             [?m :movie/cast ?p]
+                             [?m :movie/director ?d]
+                             [?d :person/name ?name]]}]}]}

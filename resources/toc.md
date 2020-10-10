@@ -6,11 +6,10 @@ Datomic is a new database with an interesting and novel architecture, giving its
 
 ## Table of Contents
 
-* [Extensible Data Notation](/chapter/0)
-* [Basic Queries](/chapter/1)
-* [Data Patterns](/chapter/2)
-* [Parameterized Queries](/chapter/3)
-* [More Queries](/chapter/4)
-* [Predicates](/chapter/5)
-* [Transformation Functions](/chapter/6)
-* [Rules](/chapter/7)
+* [Basic Queries](/chapter/0)
+* [Data Patterns](/chapter/1)
+* [Parameterized Queries](/chapter/2)
+* [Transactions](/chapter/3)
+* [Predicates](/chapter/4)
+* [Transformation Functions](/chapter/5)
+* [Rules](/chapter/6)

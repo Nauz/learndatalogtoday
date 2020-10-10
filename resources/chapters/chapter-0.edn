@@ -1,9 +1,19 @@
-{:title "Welcome"
+{:title "Basic Queries"
  :text-file "resources/chapters/chapter-0.md"
- :exercises [{:question "Find all movies titles in the database."
-              :hints []
+ :exercises [{:question "Find the entity ids of movies made in 1987"
+              :hints ["You will need to use the `:movie/year` attribute"
+                      "The data pattern should look something like `[?e :movie/title 1987]`"]
               :inputs [{:type :query
-                        :value [:find ...]
-                        :correct-value [:find ?title
+                        :value [:find ?e :where ...]
+                        :correct-value [:find ?e :where [?e :movie/year 1987]]}]}
+             {:question "Find the entity-id **and** titles of movies in the database"
+              :inputs [{:type :query
+                        :value [:find ?e ?title :where ...]
+                        :correct-value [:find ?e ?title :where [?e :movie/title ?title]]}]}
+
+             {:question "Find the name of all people in the database"
+              :inputs [{:type :query
+                        :value [:find]
+                        :correct-value [:find ?name
                                         :where
-                                        [_ :movie/title ?title]]}]}]}
+                                        [?p :person/name ?name]]}]}]}
