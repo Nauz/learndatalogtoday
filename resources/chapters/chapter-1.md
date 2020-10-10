@@ -15,16 +15,6 @@ multiple places, the query engine requires it to be bound to the same
 value in each place. Therefore, this query will only find movie titles
 for movies made in 1987.
 
-The order of the data patterns does not matter (aside from performance 
-considerations), so the previous query could just as well have been written this way:
-
-    [:find ?title
-     :where
-     [?e :movie/title ?title]
-     [?e :movie/year 1987]]
-
-In both cases, the result set will be exactly the same.
-
 Let's say we want to find out who starred in "Lethal Weapon". We
 will need three data patterns for this. The first one finds the
 entity ID of the movie with "Lethal Weapon" as the title:

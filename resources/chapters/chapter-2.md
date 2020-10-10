@@ -31,10 +31,6 @@ The above query is executed like `(q query db "Sylvester Stallone")`,
 where `query` is the query we just saw, and `db` is a database value.
 You can have any number of inputs to a query.
 
-In the above query, the input pattern variable `?name` is bound to a
-scalar - a string in this case. There are four different kinds of
-input: scalars, tuples, collections and relations.
-
 ## A quick aside
 
 Hold on. Where does that `$` get used? In query, each of these data
@@ -52,39 +48,6 @@ to the previous one:
      [$ ?p :person/name ?name]
      [$ ?m :movie/cast ?p]
      [$ ?m :movie/title ?title]]
-
-## Tuples
-
-A tuple input is written as e.g. `[?name ?age]` and can be used when
-you want to destructure an input. Let's say you have the vector
-`["James Cameron" "Arnold Schwarzenegger"]` and you want to use this
-as input to find all movies where these two people collaborated:
-
-    [:find ?title
-     :in $ [?director ?actor]
-     :where
-     [?d :person/name ?director]
-     [?a :person/name ?actor]
-     [?m :movie/director ?d]
-     [?m :movie/cast ?a]
-     [?m :movie/title ?title]]
-
-Of course, in this case, you could just as well use two distinct inputs instead:
-
-    :in $ ?director ?actor
-
-## Collections
-
-You can use collection destructuring to implement a kind of logical **or** in your query. Say you want to find all movies directed by either James Cameron **or** Ridley Scott:
-
-    [:find ?title
-     :in $ [?director ...]
-     :where
-     [?p :person/name ?director]
-     [?m :movie/director ?p]
-     [?m :movie/title ?title]]
-
-Here, the `?director` pattern variable is initially bound to both "James Cameron" and "Ridley Scott". Note that the ellipsis following `?director` is a literal, not elided code.
 
 ## Relations
 
