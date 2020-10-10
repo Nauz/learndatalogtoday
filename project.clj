@@ -1,28 +1,26 @@
-(defproject learndatalogtoday "0.1.0"
+(defproject server "0.1.0-SNAPSHOT"
   :description "Interactive Datalog Tutorial"
-  :url "http://learndatalogtoday.org"
-  :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.9.227"]
-                 [compojure "1.5.1"]
-                 [ring/ring-jetty-adapter "1.5.0"]
-                 [com.datomic/datomic-free "0.9.5394"]
+  :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
+            :url "https://www.eclipse.org/legal/epl-2.0/"}
+  :dependencies [[org.clojure/clojure "1.10.1"]
+                 [ring/ring-core "1.8.1"]
+                 [org.clojure/clojurescript "1.10.339"]
+                 [ring/ring-jetty-adapter "1.8.1"]
                  [datomic-query-helpers "0.1.1"]
-                 [hiccup "1.0.5"]
-                 [markdown-clj "0.9.89"]
-                 [fipp "0.6.6"]
-                 [com.taoensso/timbre "4.7.4"]
-                 ;; cljs
+                 [fipp "0.6.23"]
+                 [markdown-clj "1.10.5"]
+                 [com.taoensso/timbre "5.1.0"]
+                 [com.datomic/datomic-free "0.9.5697" :exclusions [com.google.guava/guava]]
                  [hylla "0.2.0"]
                  [hiccups "0.3.0"]
                  [domina "1.0.3"]]
-  :plugins [[lein-ring "0.9.7"]
+
+  :plugins [[lein-ring "0.12.5"]
+            [cider/cider-nrepl "0.25.3"]
             [lein-cljsbuild "1.1.4"]]
-  :source-paths ["src/clj"]
   :ring {:handler learndatalogtoday.handler/app}
-  :main learndatalogtoday.handler
-  :uberjar-name "learndatalogtoday-standalone.jar"
-  :min-lein-version "2.0.0"
-  :profiles {:dev {:dependencies [[ring-mock "0.1.5"]]}}
+  :source-paths ["src/clj"]
+  :repl-options {:init-ns server.core}
   :cljsbuild {:builds [{:source-paths ["src/cljs"]
                         :compiler {:output-to "resources/public/app.js"
                                    :optimizations :advanced
